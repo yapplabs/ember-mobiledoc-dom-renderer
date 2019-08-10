@@ -1,3 +1,8 @@
+import { A } from '@ember/array';
+import Component from '@ember/component';
+import { assert } from '@ember/debug';
+import { computed } from '@ember/object';
+import { join } from '@ember/runloop';
 import Ember from 'ember';
 import Renderer from 'ember-mobiledoc-dom-renderer';
 import { RENDER_TYPE } from 'ember-mobiledoc-dom-renderer';
@@ -6,9 +11,6 @@ import { getDocument } from '../utils/document';
 import assign from '../utils/polyfilled-assign';
 
 const {
-  assert,
-  computed,
-  run: { join },
   uuid
 } = Ember;
 
@@ -69,7 +71,7 @@ function createComponentAtom(name) {
   };
 }
 
-export default Ember.Component.extend({
+export default Component.extend({
   layout: layout,
 
   didReceiveAttrs() {
@@ -195,11 +197,11 @@ export default Ember.Component.extend({
   // @private
 
   _componentCards: computed(function() {
-    return Ember.A();
+    return A();
   }),
 
   _componentAtoms: computed(function() {
-    return Ember.A();
+    return A();
   }),
 
   addCard(card) {

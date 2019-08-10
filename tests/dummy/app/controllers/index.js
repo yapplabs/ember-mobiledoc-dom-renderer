@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 
 let mobiledocs = {
   simple: {
@@ -36,7 +36,7 @@ let mobiledocs = {
   }
 };
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   init() {
     this._super(...arguments);
     this.set('mobiledoc', mobiledocs['simple']);
