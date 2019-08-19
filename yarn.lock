@@ -4587,10 +4587,9 @@ mobiledoc-dom-renderer@0.7.0, mobiledoc-dom-renderer@^0.7.0:
   resolved "https://registry.yarnpkg.com/mobiledoc-dom-renderer/-/mobiledoc-dom-renderer-0.7.0.tgz#53ab5f14dd612b16f03513390e5cbcc2b89f6979"
   integrity sha512-A+gT6D4Ru3DKY7ZYOBRORmwhRJ7rDj2vy75D2dWuZS5NgX0mCmGs0yN7qs48YlxvfCif8RFpYsaaPg6Kc3MdJg==
 
-mobiledoc-kit@0.12.0-0:
+"mobiledoc-kit@git+ssh://git@github.com/yapplabs/mobiledoc-kit.git#bug/alignment-editing":
   version "0.12.0-0"
-  resolved "https://registry.yarnpkg.com/mobiledoc-kit/-/mobiledoc-kit-0.12.0-0.tgz#7b0b6b41b0ec62b48aeaf4936b06776fc5cfb814"
-  integrity sha512-kMkmIu15WK/knAsrZsKYvnrRh9ckcATh+JQCHO3R6MPGHMbd1SgVDNUBteImwfpuWE71TIYL8WUfsz6Ocyi2ow==
+  resolved "git+ssh://git@github.com/yapplabs/mobiledoc-kit.git#0c321e804ed3eaa196a44d4291746ff25233b13c"
   dependencies:
     mobiledoc-dom-renderer "0.7.0"
     mobiledoc-text-renderer "0.4.0"
