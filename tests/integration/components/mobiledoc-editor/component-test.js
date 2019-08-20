@@ -321,6 +321,49 @@ test('it exposes "toggleSection" which toggles the section type and fires `on-ch
   });
 });
 
+test('it exposes "setAttribute" which updates the section attribute value and fires `on-change`', function(assert) {
+  assert.expect(8);
+
+  let onChangeCount = 0;
+
+  let text = 'Howdy';
+  this.set('mobiledoc', simpleMobileDoc(text));
+  this.on('on-change', () => onChangeCount++);
+  this.render(hbs`
+    {{#mobiledoc-editor mobiledoc=mobiledoc on-change=(action 'on-change') as |editor|}}
+      <button class="left-btn" {{action editor.setAttribute 'text-align' 'left'}}>Left</button>
+      <button class="center-btn" {{action editor.setAttribute 'text-align' 'center'}}>Center</button>
+    {{/mobiledoc-editor}}
+  `);
+  const paragraphNode = this.$(`p:contains(${text})`)[0];
+  const textNode = paragraphNode.firstChild;
+
+  return selectRange(textNode, 0, textNode, text.length).then(() => {
+    assert.ok(!this.$(`p:contains(${text})`).attr('data-md-text-align'), 'precond - no attr');
+    assert.equal(onChangeCount, 0, 'precond - no on-change');
+
+    this.$('button.center-btn').click();
+    return wait();
+  }).then(() => {
+    assert.equal(onChangeCount, 1, 'fires on-change');
+    assert.equal(this.$(`p:contains(${text})`).attr('data-md-text-align'), 'center', 'sets attribute');
+
+    onChangeCount = 0;
+    this.$('button.center-btn').click();
+    return wait();
+  }).then(() => {
+    assert.equal(onChangeCount, 0, 'fires on-change again');
+    assert.equal(this.$(`p:contains(${text})`).attr('data-md-text-align'), 'center', 'clicking again does nothing');
+
+    onChangeCount = 0;
+    this.$('button.left-btn').click();
+    return wait();
+  }).then(() => {
+    assert.equal(onChangeCount, 1, 'fires on-change again');
+    assert.equal(this.$(`p:contains(${text})`).attr('data-md-text-align'), 'left', 'clicking left updates attribute');
+  });
+});
+
 test('toolbar buttons can be active', function(assert) {
   let text = 'abc';
   this.set('mobiledoc', simpleMobileDoc(text));

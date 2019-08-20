@@ -4587,9 +4587,9 @@ mobiledoc-dom-renderer@0.7.0, mobiledoc-dom-renderer@^0.7.0:
   resolved "https://registry.yarnpkg.com/mobiledoc-dom-renderer/-/mobiledoc-dom-renderer-0.7.0.tgz#53ab5f14dd612b16f03513390e5cbcc2b89f6979"
   integrity sha512-A+gT6D4Ru3DKY7ZYOBRORmwhRJ7rDj2vy75D2dWuZS5NgX0mCmGs0yN7qs48YlxvfCif8RFpYsaaPg6Kc3MdJg==
 
-"mobiledoc-kit@https://yapp-assets.s3.amazonaws.com/mobiledoc-kit-0c321e804ed3eaa196a44d4291746ff25233b13c.tgz":
+"mobiledoc-kit@https://yapp-assets.s3.amazonaws.com/mobiledoc-kit-1d0e33f533586e2d4120124ef165321d16d8edf7.tgz":
   version "0.12.0-0"
-  resolved "https://yapp-assets.s3.amazonaws.com/mobiledoc-kit-0c321e804ed3eaa196a44d4291746ff25233b13c.tgz#a7debd1388442c0ed17c5c25ed44ddc17e6440d0"
+  resolved "https://yapp-assets.s3.amazonaws.com/mobiledoc-kit-1d0e33f533586e2d4120124ef165321d16d8edf7.tgz#4dd0e50e6e1b156cea859ca20976b9d810a41af7"
   dependencies:
     mobiledoc-dom-renderer "0.7.0"
     mobiledoc-text-renderer "0.4.0"

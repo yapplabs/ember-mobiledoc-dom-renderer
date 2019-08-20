@@ -77,6 +77,7 @@ export default Component.extend({
     this.set('linkOffsets', null);
     this.set('activeMarkupTagNames', {});
     this.set('activeSectionTagNames', {});
+    this.set('activeSectionAttributes', {});
     this._startedRunLoop  = false;
   },
 
@@ -89,6 +90,11 @@ export default Component.extend({
     toggleSection(sectionTagName) {
       let editor = this.get('editor');
       editor.toggleSection(sectionTagName);
+    },
+
+    setAttribute(attributeName, attributeValue) {
+      let editor = this.get('editor');
+      editor.setAttribute(attributeName, attributeValue);
     },
 
     addCard(cardName, payload={}) {
@@ -302,23 +308,39 @@ export default Component.extend({
     const markupTags = arrayToMap(editor.activeMarkups.map(m => m.tagName));
     // editor.activeSections are leaf sections.
     // Map parent section tag names (e.g. 'p', 'ul', 'ol') so that list buttons
-    // are updated.
+    // can be bound.
+    // Also build a map of section attributes for the same reason.
     let sectionParentTagNames = editor.activeSections.map(s => {
       return s.isNested ? s.parent.tagName : s.tagName;
     });
     const sectionTags = arrayToMap(sectionParentTagNames);
+    const sectionAttributes = {};
+    editor.activeSections.forEach(s => {
+      let attributes = s.isNested ? s.parent.attributes : s.attributes;
+      Object.keys(attributes || {}).forEach(attrName => {
+        let camelizedAttrName = camelize(attrName.replace(/^data-md/, ''));
+        let attrValue = attributes[attrName];
+        sectionAttributes[camelizedAttrName] = sectionAttributes[camelizedAttrName] || [];
+        if (!sectionAttributes[camelizedAttrName].includes(attrValue)) {
+          sectionAttributes[camelizedAttrName].push(attrValue);
+        }
+      });
+    });
 
+    let setEditorProps = () => {
+      this.setProperties({
+        activeMarkupTagNames: markupTags,
+        activeSectionTagNames: sectionTags,
+        activeSectionAttributes: sectionAttributes
+      });
+    }
     // Avoid updating this component's properties synchronously while
     // rendering the editor (after rendering the component) because it
     // causes Ember to display deprecation warnings
     if (this._isRenderingEditor) {
-      schedule('afterRender', () => {
-        this.set('activeMarkupTagNames', markupTags);
-        this.set('activeSectionTagNames', sectionTags);
-      });
+      schedule('afterRender', setEditorProps);
     } else {
-      this.set('activeMarkupTagNames', markupTags);
-      this.set('activeSectionTagNames', sectionTags);
+      setEditorProps();
     }
   },
 
